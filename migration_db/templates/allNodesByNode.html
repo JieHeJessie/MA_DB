@@ -1,0 +1,104 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<title>Metabolomics Australia - Home</title>
+
+	<meta name="description" content="">
+	<meta name="author" content="templatemo">
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/templatemo-style.css' %}" rel="stylesheet">
+</head>
+<body>
+	<!--main page-->
+	<div class="templatemo-flex-row">
+		<!--=======================left side1.1========================-->
+		<div class="templatemo-sidebar">
+			<!--left_header-->
+			<header class="templatemo-site-header">
+
+				<h1>Metabolomics Australia Database</h1>
+			</header>
+			<!--left_image-->
+			<div class="profile-photo-container">
+              <img src="{% static 'images/profile-photo.jpg' %}" alt="MA Photo" class="img-responsive">
+			</div>
+			<br><br><br>
+			<!--mobile_MouseChangeToFinger-->
+			<div class="mobile-menu-icon">
+				<i class="fa fa-bars"></i>
+			</div>
+			<!--left_navigation-->
+			<nav class="templatemo-left-nav">          
+				<ul>
+					<li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
+					<li><a href="data-visualization.html"><i class="fa fa-info fa-fw"></i>Quote Information</a></li>
+					<li><a href="data-visualization.html"><i class="fa fa-search-plus fa-fw"></i>Search</a></li>
+					<li><a href="maps.html"><i class="fa fa-money fa-fw"></i>Invoice Information</a></li>
+					<li><a href="login.html"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+				</ul>  
+			</nav>
+		</div>
+		<!--=======================right side1.2========================-->
+		<div class="templatemo-content col-1 light-gray-bg">
+			<!--Top 1.2.1-->
+			<div class="templatemo-top-nav-container">        
+				<div class="white-bg col-1 text-center">
+                  <img src="{% static 'images/MA.png' %}" alt="MA" class="img-circle img-thumbnail" height="200" width="280">
+				</div>        
+			</div>
+			<!--body(main) except top 1.2.2-->
+			<div class="templatemo-content-container">
+				<!--main_body_info-->
+				<div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+					<i class="fa fa-times"></i>
+					<div class="panel-heading templatemo-position-relative">
+						<h2>Choose Filtering Information</h2>
+					</div>
+				</div>
+				<!--main_body_info_chosse-->
+				<div class="templatemo-content-widget white-bg">
+					<form action="chartbynode" method="post">
+						<!--Choice period-->					    
+						<h2>Choose Period:</h2>
+						<br><br>					
+						From: <input type="date" name="from_user_date" />
+						&nbsp &nbsp
+						To: <input type="date" name="to_user_date" />
+						<br><br><br><br><br><br>
+						<!--Choose attribute-->
+						<h2>Choose Option:</h2>
+						<br><br>
+						<div class="col-lg-6 col-md-6 form-group">
+							<div>
+
+								<div class="templatemo-block margin-bottom-5">
+									<input type="radio" name="num_cus" id="r1" value="value1" checked="">
+									<label for="r1" class="font-weight-400"><span></span>Client Volumn</label>
+								</div>
+								<div class="templatemo-block margin-bottom-5">
+									<input type="radio" name="num_cus" id="r2" value="value2">
+									<label for="r2" class="font-weight-400"><span></span>Subtotal Information</label>
+								</div>
+								                  
+							</div>                  
+						</div>
+						<br><br><br><br><br>
+						<button type="submit" class="templatemo-blue-button">Search</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

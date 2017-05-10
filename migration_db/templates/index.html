@@ -1,0 +1,193 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+  <title>Metabolomics Australia - Home</title>
+
+  <meta name="description" content="">
+  <meta name="author" content="templatemo">
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/templatemo-style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <!--main page-->
+  <div class="templatemo-flex-row">
+    <!--=======================left side1.1========================-->
+    <div class="templatemo-sidebar">
+      <!--left_header-->
+      <header class="templatemo-site-header">
+
+        <h1>Metabolomics Australia Database</h1>
+      </header>
+      <!--left_image-->
+      <div class="profile-photo-container">
+        <img src="{% static 'images/profile-photo.jpg' %}" alt="MA Photo" class="img-responsive">  
+      </div>
+      <br><br><br>
+      <!--mobile_MouseChangeToFinger-->
+      <div class="mobile-menu-icon">
+        <i class="fa fa-bars"></i>
+      </div>
+      <!--left_navigation-->
+      <nav class="templatemo-left-nav">          
+        <ul>
+          <li><a href=" " class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a ></li>
+          <li><a href="quote"><i class="fa fa-info fa-fw"></i>Quote Information</a ></li>
+          <li><a href="invoice"><i class="fa fa-money fa-fw"></i>Invoice Information</a ></li>
+          <li><a href="search"><i class="fa fa-search-plus fa-fw"></i>Search</a ></li>
+          <li><a href="import"><i class="fa fa-upload fa-fw"></i>Import</a ></li>
+          <li><a href="login.html"><i class="fa fa-eject fa-fw"></i>Sign Out</a ></li>
+        </ul>  
+      </nav>
+    </div>
+    <!--=======================right side1.2========================-->
+    <div class="templatemo-content col-1 light-gray-bg">
+      <!--Top 1.2.1-->
+      <div class="templatemo-top-nav-container">        
+        <div class="white-bg col-1 text-center">
+          <img src="{% static 'images/MA.png' %}" alt="MA" class="img-circle img-thumbnail" height="200" width="280">
+        </div>        
+      </div>
+      <!--body(main) except top 1.2.2-->
+      <div class="templatemo-content-container">
+
+        <!--main_body_info-->
+        <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+          <i class="fa fa-times"></i>
+          <div class="panel-heading templatemo-position-relative">
+            <h2>PROJRCT INFORMATION &nbsp &nbsp &nbsp &nbsp(see all nodes: <a href="chart_page/">By node</a> or <a href="state_page/">By state</a>)</h2>
+          </div>
+        </div>
+        <!--main_body_info_chosse_Murdoch-->
+        <div class="templatemo-content-widget white-bg">
+          <i class="fa fa-times"></i>
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="{% static 'images/murdoch.png' %}" alt="murdoch" height="180" width="180">
+              </a>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-uppercase">Murdoch University</h2>
+              <br><br><br>
+              <!--MU/projects_list/-->
+              <a  href = "Murdoch/projects_list/" class="templatemo-blue-button">Project List</a>
+              <a  href = "Murdoch/income_chart/" class="templatemo-blue-button">Income Chart</a>
+              <a  href = "Murdoch/filter_infor/" class="templatemo-blue-button">Filtering Information</a>
+
+            </div>
+          </div>                
+        </div> 
+
+        <!--main_body_info_chosse_UWA-->
+        <div class="templatemo-content-widget white-bg">
+          <i class="fa fa-times"></i>
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="{% static 'images/UMA.png' %}" alt="UWA" height="180" width="180">
+              </a>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-uppercase">University of Western Australia</h2>
+              <br><br><br>
+
+              <a  href = "UWA/projects_list/" class="templatemo-blue-button">Project List</a>
+              <a  href = "UWA/income_chart/" class="templatemo-blue-button">Income Chart</a>
+              <a  href = "UWA/filter_infor/" class="templatemo-blue-button">Filtering Information</a>
+
+            </div>
+          </div>                
+        </div> 
+
+        <!--main_body_info_chosse_AWRI-->
+        <div class="templatemo-content-widget white-bg">
+          <i class="fa fa-times"></i>
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="{% static 'images/AWRI.png' %}" alt="AWRI" height="180" width="180">
+              </a>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-uppercase">Australain Wine Research Institute</h2>
+              <br><br><br>
+
+              <a  href = "AWRI/projects_list/" class="templatemo-blue-button">Project List</a>
+              <a  href = "AWRI/income_chart/" class="templatemo-blue-button">Income Chart</a>
+              <a  href = "AWRI/filter_infor/" class="templatemo-blue-button">Filtering Information</a>
+
+            </div>
+          </div>                
+        </div> 
+
+        <!--main_body_info_chosse_Unimelb-->
+        <div class="templatemo-content-widget white-bg">
+          <i class="fa fa-times"></i>
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="{% static 'images/unimelb.jpeg' %}" alt="Unimelb" height="180" width="180">
+              </a>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-uppercase">University of Melbourne</h2>
+              <br><br><br>
+              <a  href = "UM/projects_list/" class="templatemo-blue-button">Project List</a>
+              <a  href = "UM/income_chart/" class="templatemo-blue-button">Income Chart</a>
+              <a  href = "UM/filter_infor/" class="templatemo-blue-button">Filtering Information</a>
+            </div>
+          </div>                
+        </div>
+
+        <!--main_body_info_chosse_UQ-->
+        <div class="templatemo-content-widget white-bg">
+          <i class="fa fa-times"></i>
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="{% static 'images/UQ.png' %}" alt="UQ" height="180" width="180">
+              </a>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-uppercase">University of Queensland</h2>
+              <br><br><br>
+              <a  href = "UQ/projects_list/" class="templatemo-blue-button">Project List</a>
+              <a  href = "UQ/income_chart/" class="templatemo-blue-button">Income Chart</a>
+              <a  href = "UQ/filter_infor/" class="templatemo-blue-button">Filtering Information</a>
+            </div>
+          </div>                
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!--==================================Script=========================-->
+  <!-- JS -->
+  <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>      <!-- jQuery -->
+  <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script> <!--  jQuery Migrate Plugin -->
+  <script src="{% static 'https://www.google.com/jsapi' %}"></script> <!-- Google Chart -->
+  <script>
+    function jumpProjTable(){
+      window.location.href="nodeProTable.html";
+    }
+    function jumpIncomeChart(){
+      window.location.href="nodeIncomeChart.html";
+    }
+    function jumpFilter(){
+      window.location.href="nodeFilter.html";
+    }
+  </script>
+
+</body>
+</html>

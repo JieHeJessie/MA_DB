@@ -69,19 +69,19 @@
 
 				<!--main_body_info_chosse-->
 				<div class="templatemo-content-widget white-bg">
-					<form action="import_success.html" method="post">
+					<form enctype="multipart/form-data" action="read_invoice" method="post">
 
 						<label class="control-label">Select a file</label>
-						<input type="file" name="fileToUpload" id="fileToUpload" class="margin-bottom-10">
+						<input type="file" name="excel" id="fileToUpload" class="margin-bottom-10">
 						<br>
 						<label class="control-label">Select a sheet</label>
-						<input type="text" class="form-control" id="sheet">
+						<input type="text" name="sheet" class="form-control" id="sheet">
 						<br>
 						<label class="control-label">From row</label>
-						<input type="text" class="form-control" id="row">
+						<input type="text" name="from_row" class="form-control" id="row">
 						<br>
 						<label class="control-label">To row</label>
-						<input type="text" class="form-control" id="torow">
+						<input type="text" name="to_row" class="form-control" id="torow">
 
 						<br><br><br><br>
 						<button type="submit" class="templatemo-blue-button">Import</button>

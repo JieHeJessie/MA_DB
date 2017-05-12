@@ -7,6 +7,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Sum, Q
 import openpyxl
+from MA_DB import settings
+import os
 
 import MySQLdb
 from datetime import date, datetime
@@ -59,23 +61,226 @@ def import_page(request):
 def import_project(request):
     return render(request, 'import_project.html')
 
+def import_invoice(request):
+    return render(request, 'import_invoice.html')
 
+
+def import_quote(request):
+    return render(request, 'import_quote.html')
 def read_project(request):
-    if request.method == 'POST':
-        file_name = request.FILES['file_name']
 
+    if request.method == 'POST':
+        file_name = request.FILES['excel']
+        print request.FILES['excel']
+        sheet=request.POST['sheet']
+        start=int(request.POST['from_row'])
+        end=int(request.POST['to_row'])
+
+        book = openpyxl.load_workbook(file_name, data_only=True)
+        sheet = book.get_sheet_by_name(sheet)
+
+        database = MySQLdb.connect(host="localhost", user=settings.DB_USERNAME, passwd=settings.DB_PASSWORD, db="ma_newdb")
+        cursor = database.cursor()
+
+        for row in range(start, end+1):
+            node = sheet['A' + str(row)].value
+            pro_date = sheet['B' + str(row)].value
+            project_name = sheet['C' + str(row)].value
+            service = sheet['D' + str(row)].value
+            instrument = sheet['E' + str(row)].value
+            person = sheet['F' + str(row)].value
+            organization = sheet['G' + str(row)].value
+            num_sample = sheet['H' + str(row)].internal_value
+            category = sheet['I' + str(row)].value
+            int_ext = sheet['J' + str(row)].value
+            state = sheet['K' + str(row)].value
+            country = sheet['L' + str(row)].value
+            user_define1 = sheet['M' + str(row)].value
+            user_define2 = sheet['N' + str(row)].value
+            subtotal = sheet['O' + str(row)].value
+            cus_count = sheet['P' + str(row)].value
+
+            # if pro_date=='Half year' or pro_date is 'Full year':
+            # pro_date = date.today().isoformat()
+            if isinstance(pro_date, date):
+                pro_date = pro_date.isoformat()
+            else:
+                pro_date = date.today().isoformat()
+            if project_name is None:
+                project_name = 'null'
+            if person is None:
+                person = 'Null'
+            if organization is None:
+                organization = "Null"
+            if cus_count is None:
+                cus_count = "0"
+            if user_define2 is not None:
+                user_define2 = user_define2.upper()
+            else:
+                user_define2 = "NULL"
+            if not isinstance(num_sample, int):
+                num_sample = 0
+
+            if subtotal is None:
+                subtotal = 0.00
+            else:
+                subtotal = decimal.Decimal("%.2f" % subtotal)
+
+            field_check = user_define2.split(';')
+            if len(field_check) == 1:
+                query = """INSERT INTO migration_db_project (node, pro_date,project_name,service,instrument,person,organization,num_sample,category,int_ext,state,country,user_define1,user_define2,subtotal,cus_count) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+                values = (
+                    node, pro_date, project_name, service, instrument, person, organization, num_sample, category,
+                    int_ext, state,
+                    country, user_define1, user_define2, subtotal, cus_count)
+                cursor.execute(query, values)
+                database.commit()
+            else:
+                for each in field_check:
+                    query = """INSERT INTO migration_db_project (node,pro_date,project_name,service,instrument,person,organization,num_sample,category,int_ext,state,country,user_define1,user_define2,subtotal,cus_count) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+                    values = (
+                        node, pro_date, project_name, service, instrument, person, organization, num_sample, category,
+                        int_ext,
+                        state, country, user_define1, each, subtotal, cus_count)
+                    cursor.execute(query, values)
+                    database.commit()
+
+        cursor.close()
+
+        database.close()
+
+        print ("Importion Done.")
 
 
         return render(request, 'import_success.html')
 
+def read_invoice(request):
 
+    if request.method == 'POST':
+        file_name = request.FILES['excel']
+        print request.FILES['excel']
+        sheet=request.POST['sheet']
+        start=int(request.POST['from_row'])
+        end=int(request.POST['to_row'])
 
+        book = openpyxl.load_workbook(file_name, data_only=True)
+        sheet = book.get_sheet_by_name(sheet)
 
+        database = MySQLdb.connect(host="localhost", user=settings.DB_USERNAME, passwd=settings.DB_PASSWORD, db="ma_newdb")
+        cursor = database.cursor()
 
+        for row in range(start, end+1):
+            invoice_date = sheet['A' + str(row)].value
+            invoice_num = sheet['B' + str(row)].value
+            bad_debt = sheet['C' + str(row)].value
+            quote = sheet['D' + str(row)].value
+            paid = sheet['E' + str(row)].value
+            ma_staff = sheet['F' + str(row)].value
+            project_invoice = sheet['G' + str(row)].value
+            service_type = sheet['H' + str(row)].value
+            instrument = sheet['I' + str(row)].value
+            person_invoice = sheet['J' + str(row)].value
+            address = sheet['K' + str(row)].value
+            no_sample_in = sheet['L' + str(row)].value
+            category_in = sheet['M' + str(row)].value
+            int_ext_in = sheet['N' + str(row)].value
+            user_define1_in = sheet['O' + str(row)].value
+            user_define2_in = sheet['P' + str(row)].value
+            sub_total_in = sheet['q' + str(row)].value
+            reconciliation = sheet['r' + str(row)].value
+            running_total = sheet['s' + str(row)].value
+            if isinstance(invoice_date, date):
+                invoice_date = invoice_date.isoformat()
+            else:
+                invoice_date = date.today().isoformat()
+            if bad_debt is None:
+                bad_debt = "Null"
+            if paid is None:
+                paid = "Null"
+            if reconciliation is None:
+                reconciliation = "Null"
+            if running_total is None:
+                running_total = "Null"
 
+            query = """INSERT INTO migration_db_invoice(invoice_date,invoice_num,bad_debt,quote,paid,ma_staff
+                                                            ,project_invoice,service_type,instrument,person_invoice,address,no_sample_in,category_in,
+                                                            int_ext_in, user_define1_in, user_define2_in, sub_total_in, reconciliation, running_total) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+            print query
+            values = (invoice_date, invoice_num, bad_debt, quote, paid, ma_staff, project_invoice, service_type,
+                      instrument, person_invoice, address, no_sample_in, category_in, int_ext_in, user_define1_in,
+                      user_define2_in, sub_total_in, reconciliation, running_total)
+            cursor.execute(query, values)
 
+        database.commit()
+        cursor.close()
 
+        database.close()
+        print ("Importion Done.")
 
+        return render(request, 'import_success.html')
+
+def read_quote(request):
+
+    if request.method == 'POST':
+        file_name = request.FILES['excel']
+        print request.FILES['excel']
+        sheet=request.POST['sheet']
+        start=int(request.POST['from_row'])
+        end=int(request.POST['to_row'])
+
+        book = openpyxl.load_workbook(file_name, data_only=True)
+        sheet = book.get_sheet_by_name(sheet)
+
+        database = MySQLdb.connect(host="localhost", user=settings.DB_USERNAME, passwd=settings.DB_PASSWORD, db="ma_newdb")
+        cursor = database.cursor()
+        for row in range(start, end+1):
+            quote_num = sheet['A' + str(row)].value
+            quote_year = sheet['B' + str(row)].value
+            version = sheet['C' + str(row)].value
+            concatenate = sheet['D' + str(row)].value
+            client = sheet['E' + str(row)].value
+            company = sheet['F' + str(row)].value
+            quote_staff = sheet['G' + str(row)].internal_value
+            quote_date = sheet['H' + str(row)].value
+            quote_value = sheet['I' + str(row)].value
+            grant_not = sheet['J' + str(row)].value
+            accept = sheet['K' + str(row)].value
+            invoiced_not = sheet['L' + str(row)].value
+            comment = sheet['M' + str(row)].value
+
+            if isinstance(quote_date, date):
+                quote_date = quote_date.isoformat()
+            else:
+                quote_date = date.today().isoformat()
+
+            if quote_value is None:
+                quote_value = "Null"
+            if version is None:
+                version = "Null"
+
+            if grant_not is None:
+                grant_not = "Null"
+            if accept is None:
+                accept = "Null"
+            if invoiced_not is None:
+                invoiced_not = "Null"
+            if comment is None:
+                comment = "Null"
+
+            query = """INSERT INTO migration_db_quote(quote_num,quote_year,version,concatenate,client,company,quote_staff,quote_date,quote_value,grant_not,accept, invoiced_not,comment) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+            values = (
+            quote_num, quote_year, version, concatenate, client, company, quote_staff, quote_date, quote_value,
+            grant_not, accept, invoiced_not, comment)
+            cursor.execute(query, values)
+            database.commit()
+
+        cursor.close()
+
+        database.close()
+
+        print ("Importion Done.")
+
+        return render(request, 'import_success.html')
 
 
 

@@ -14,8 +14,6 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -78,12 +76,14 @@ WSGI_APPLICATION = 'MA_DB.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+f=open(BASE_DIR+'/config.conf','r')
+
 
 DB_HOST='localhost'
 DB_PORT=3306
 DB_NAME='ma_newdb'
-DB_USERNAME='root'
-DB_PASSWORD='wang123Q'
+DB_USERNAME=f.readline().strip()
+DB_PASSWORD=f.readline().strip()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

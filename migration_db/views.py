@@ -7,6 +7,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Sum, Q
 import openpyxl
+
+import MySQLdb
+from datetime import date, datetime
+import decimal
 STATES = ['Vic','Qld','NSW','SA','WA','NT']
 def hello(request):
     return  HttpResponse("Hello world")
@@ -22,6 +26,7 @@ def login_result(request):
     if request.method=='POST':
         username = request.POST['username']
         password = request.POST['pass_word']
+
         if user.objects.filter(username=username).filter(password=password).exists():
             request.session['username']=username
             return redirect('index')
@@ -51,6 +56,34 @@ def register_result(request):
 def import_page(request):
     return render(request, 'import.html')
 
+def import_project(request):
+    return render(request, 'import_project.html')
+
+
+def read_project(request):
+    if request.method == 'POST':
+        file_name = request.FILES['file_name']
+
+
+
+        return render(request, 'import_success.html')
+
+
+
+
+
+
+
+
+
+
+
+
+def import_invoice(request):
+    return render(request, 'import_invoice.html')
+
+def import_quote(request):
+    return render(request, 'import_quote.html')
 # def import_project(request):
 #     return render()
 
@@ -687,3 +720,5 @@ def search_detail(request,search_id):
     context_dict['s'] = p
 
     return render(request, 'search_detail.html', context_dict)
+
+

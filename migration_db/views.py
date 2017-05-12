@@ -22,8 +22,6 @@ def login_result(request):
     if request.method=='POST':
         username = request.POST['username']
         password = request.POST['pass_word']
-        print password
-        print username
         if user.objects.filter(username=username).filter(password=password).exists():
             request.session['username']=username
             return redirect('index')

@@ -22,8 +22,8 @@ SECRET_KEY = '07$*55wn4ora%w)@zc1w2kzn&lm#+-$d4yb@$^xdb+s52a@%4b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+f=open(BASE_DIR+'/config.conf','r')
+ALLOWED_HOSTS = [f.readline().strip()]
 
 
 # Application definition
@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'MA_DB.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-f=open(BASE_DIR+'/config.conf','r')
+
 
 
 DB_HOST='localhost'

@@ -1,140 +1,83 @@
+{% extends 'blank.html'%}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<title>Metabolomics Australia - Home</title>
+  {% block content%}
+    <!--table-->
+        <div class="col-1">
+          <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+            <i class="fa fa-times"></i>
+            <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Quote Details</h2>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <tbody>
+                  <!--display data colum by column-->
+                  <tr>
+                    <td>Quote_ID</td>
+                    <td>{{q_company.quote_id}}</td>
+                  </tr>
 
-	<meta name="description" content="">
-	<meta name="author" content="templatemo">
+                  <tr>
+                    <td>Quote_Num</td>
+                    <td>{{q_company.quote_num}}</td>
+                  </tr>
 
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/templatemo-style.css' %}" rel="stylesheet">
-</head>
-<body>
-	<div class="templatemo-flex-row">
-		<!--=======================left side1.1========================-->
-		<div class="templatemo-sidebar">
-			<!--left_header-->
-			<header class="templatemo-site-header">
+                  <tr>
+                    <td>Quote_Date</td>
+                    <td>{{q_company.quote_date}}</td>
+                  </tr>
 
-				<h1>Metabolomics Australia Database</h1>
-			</header>
-			<!--left_image-->
-			<div class="profile-photo-container">
-              <img src="{% static 'images/profile-photo.jpg' %}" alt="MA Photo" class="img-responsive">
-			</div>
-			<br><br><br>
-			<!--mobile_MouseChangeToFinger-->
-			<div class="mobile-menu-icon">
-				<i class="fa fa-bars"></i>
-			</div>
-			<!--left_navigation-->
-			<nav class="templatemo-left-nav">          
-				<ul>
-					<li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
-					<li><a href="quote.html"><i class="fa fa-info fa-fw"></i>Quote Information</a></li>
-					<li><a href="maps.html"><i class="fa fa-money fa-fw"></i>Invoice Information</a></li>
-					<li><a href="search.html"><i class="fa fa-search-plus fa-fw"></i>Search</a></li>
-					<li><a href="import.html"><i class="fa fa-upload fa-fw"></i>Import</a></li>
-					<li><a href="login.html"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
-				</ul>  
-			</nav>
-		</div>
-		<!--=======================right side1.2========================-->
-		<div class="templatemo-content col-1 light-gray-bg">
-		    <!--Top 1.2.1-->
-			<div class="templatemo-top-nav-container">        
-				<div class="white-bg col-1 text-center">
-                  <img src="{% static 'images/MA.png' %}" alt="MA" class="img-circle img-thumbnail" height="200" width="280">
-				</div>        
-			</div>
-			<!--body(main) except top 1.2.2-->
-			<div class="templatemo-content-container">
-				<!--table-->
-				<div class="col-1">
-					<div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
-						<i class="fa fa-times"></i>
-						<div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Quote Details</h2>
-						</div>
-						<div class="table-responsive">
-							<table class="table table-striped table-bordered">
-								<tbody>
-								  <!--display data colum by column-->
-								  <tr>
-								    <td>Quote_ID</td>
-								    <td>{{q_company.quote_id}}</td>
-								  </tr>
-								  
-								  <tr>
-								    <td>Quote_Num</td>
-								    <td>{{q_company.quote_num}}</td>
-								  </tr>
+                  <tr>
+                    <td>Concatenate</td>
+                    <td>{{q_company.concatenate}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Quote_Date</td>
-								    <td>{{q_company.quote_date}}</td>
-								  </tr>
+                  <tr>
+                    <td>Client</td>
+                    <td>{{q_company.client}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Concatenate</td>
-								    <td>{{q_company.concatenate}}</td>
-								  </tr>
+                  <tr>
+                    <td>Company</td>
+                    <td>{{q_company.company}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Client</td>
-								    <td>{{q_company.client}}</td>
-								  </tr>
+                  <tr>
+                    <td>Staff</td>
+                    <td>{{q_company.quote_staff}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Company</td>
-								    <td>{{q_company.company}}</td>
-								  </tr>
+                  <tr>
+                    <td>Value</td>
+                    <td>{{q_company.quote_value}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Staff</td>
-								    <td>{{q_company.quote_staff}}</td>
-								  </tr>
+                  <tr>
+                    <td>Grant</td>
+                    <td>{{q_company.grant_not}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Value</td>
-								    <td>{{q_company.quote_value}}</td>
-								  </tr>
+                  <tr>
+                    <td>Accept</td>
+                    <td>{{q_company.accept}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Grant</td>
-								    <td>{{q_company.grant_not}}</td>
-								  </tr>
+                  <tr>
+                    <td>Invoice</td>
+                    <td>{{q_company.invoiced_not}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Accept</td>
-								    <td>{{q_company.accept}}</td>
-								  </tr>
+                  <tr>
+                    <td>Comment</td>
+                    <td>{{q_company.comment}}</td>
+                  </tr>
 
-								  <tr>
-								    <td>Invoice</td>
-								    <td>{{q_company.invoiced_not}}</td>
-								  </tr>
+                </tbody>
 
-								  <tr>
-								    <td>Comment</td>
-								    <td>{{q_company.comment}}</td>
-								  </tr>
+              </table>
+            </div>
+          </div>
+        </div>
 
-								</tbody>
 
-							</table>    
-						</div>                          
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-</body>
-</html>
+  {% endblock%}

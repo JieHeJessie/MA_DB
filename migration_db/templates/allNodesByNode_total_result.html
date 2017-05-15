@@ -82,11 +82,12 @@
 			<!--left_navigation-->
 			<nav class="templatemo-left-nav">          
 				<ul>
-					<li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a></li>
-					<li><a href="data-visualization.html"><i class="fa fa-info fa-fw"></i>Quote Information</a></li>
-					<li><a href="data-visualization.html"><i class="fa fa-search-plus fa-fw"></i>Search</a></li>
-					<li><a href="maps.html"><i class="fa fa-money fa-fw"></i>Invoice Information</a></li>
-					<li><a href="login.html"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+					<li><a href=" " class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a ></li>
+                    <li><a href="{% url 'quote_page' %}"><i class="fa fa-info fa-fw"></i>Quote Information</a ></li>
+                    <li><a href="{% url 'invoice_page' %}"><i class="fa fa-money fa-fw"></i>Invoice Information</a ></li>
+                    <li><a href="{% url 'search' %}"><i class="fa fa-search-plus fa-fw"></i>Search</a ></li>
+                    <li><a href="{% url 'import_page' %}"><i class="fa fa-upload fa-fw"></i>Import</a ></li>
+                    <li><a href="{% url 'login' %}"><i class="fa fa-eject fa-fw"></i>Sign Out</a ></li>
 				</ul>  
 			</nav>
 		</div>

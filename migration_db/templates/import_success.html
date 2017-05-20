@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
   {% block content%}
+
+    {% if state == 'success' %}
     <div class="templatemo-content-widget pink-bg">
                 <i class="fa fa-times"></i>
                 <h2 class="text-uppercase margin-bottom-10" style=" text-align:center;">Succeessful Upload!</h2>
@@ -9,6 +11,19 @@
                 <p style="text-align: center"><a href="index.html" class="margin-bottom-10" style="color:#FFFFFF"> Return homepage</a></p>
 
 	</div>
+    {% endif %}
+
+    {% if state == 'fail' %}
+     <div class="templatemo-content-widget pink-bg">
+                <i class="fa fa-times"></i>
+                <h2 class="text-uppercase margin-bottom-10" style=" text-align:center;">Fail upload, because {{error_message}}</h2>
+                <br><br><br>
+                <p style="text-align: center"><a href="index.html" class="margin-bottom-10" style="color:#FFFFFF"> Return import page</a></p>
+
+	 </div>
+
+    {% endif %}
+
 
 
   {% endblock%}

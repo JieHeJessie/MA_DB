@@ -18,3 +18,10 @@ $(document).ready(function(){
 		});
 	});
 });
+
+function navActive(id) {
+    $("#nav>ul>li.active").removeClass("active");
+    var elem = '#nav>ul>li:nth-child(' + id +')>a';
+    $(elem).addClass("active");
+
+}

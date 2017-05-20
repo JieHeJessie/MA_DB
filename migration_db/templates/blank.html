@@ -37,14 +37,32 @@
         <i class="fa fa-bars"></i>
       </div>
       <!--left_navigation-->
-      <nav class="templatemo-left-nav">
+      <nav class="templatemo-left-nav" id="nav">
         <ul>
-          <li><a href=" {% url 'index' %}" class="active"><i class="fa fa-home fa-fw"></i>Dashboard</a ></li>
-          <li><a href="{% url 'quote_page' %}"><i class="fa fa-info fa-fw"></i>Quote Information</a ></li>
-          <li><a href="{% url 'invoice_page' %}"><i class="fa fa-money fa-fw"></i>Invoice Information</a ></li>
-          <li><a href="{% url 'search' %}"><i class="fa fa-search-plus fa-fw"></i>Search</a ></li>
-          <li><a href="{% url 'import_page' %}"><i class="fa fa-upload fa-fw"></i>Import</a ></li>
-          <li><a href="{% url 'login' %}"><i class="fa fa-eject fa-fw"></i>Sign Out</a ></li>
+          <li onclick="navActive(0)">
+            <a href=" {% url 'index' %}" class="active">
+              <i class="fa fa-home fa-fw"></i>Dashboard</a >
+          </li>
+          <li onclick="navActive(1)">
+              <a href="{% url 'quote_page' %}">
+              <i class="fa fa-info fa-fw"></i>Quote Information</a >
+          </li>
+          <li onclick="navActive(2)">
+              <a href="{% url 'invoice_page' %}">
+              <i class="fa fa-money fa-fw"></i>Invoice Information</a >
+          </li>
+          <li onclick="navActive(3)">
+              <a href="{% url 'search' %}">
+              <i class="fa fa-search-plus fa-fw"></i>Search</a >
+          </li>
+          <li onclick="navActive(4)">
+              <a href="{% url 'import_page' %}">
+              <i class="fa fa-upload fa-fw"></i>Import</a >
+          </li>
+          <li onclick="navActive(5)">
+              <a href="{% url 'login' %}">
+              <i class="fa fa-eject fa-fw"></i>Sign Out</a >
+          </li>
         </ul>
       </nav>
     </div>
@@ -71,7 +89,7 @@
   <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>      <!-- jQuery -->
   <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script> <!--  jQuery Migrate Plugin -->
   <script src="{% static 'https://www.google.com/jsapi' %}"></script> <!-- Google Chart -->
-
+  <script src="{% static 'js/script.js' %}"></script> <!-- Google Chart -->
 
 </body>
 </html>

@@ -69,7 +69,7 @@ for row in range(2, 60):
             node, pro_date, project_name, service, instrument, person, organization, num_sample, category, int_ext,
             state, country, user_define1, each, subtotal, cus_count)
             cursor.execute(query, values)
-            database.commit()
+            # database.commit()
 
 cursor.close()
 

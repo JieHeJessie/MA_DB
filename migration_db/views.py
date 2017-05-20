@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -68,7 +70,7 @@ def import_invoice(request):
 def import_quote(request):
     return render(request, 'import_quote.html')
 def read_project(request):
-
+    context_dict = {}
     if request.method == 'POST':
         file_name = request.FILES['excel']
         print request.FILES['excel']
@@ -82,6 +84,104 @@ def read_project(request):
         database = MySQLdb.connect(host="localhost", user=settings.DB_USERNAME, passwd=settings.DB_PASSWORD, db="ma_newdb")
         cursor = database.cursor()
 
+        node_header = sheet['A' + str(1)].value
+        pro_date_header = sheet['B' + str(1)].value
+        project_name_header = sheet['C' + str(1)].value
+        service_header = sheet['D' + str(1)].value
+        instrument_header = sheet['E' + str(1)].value
+        person_header = sheet['F' + str(1)].value
+        organization_header = sheet['G' + str(1)].value
+        num_sample_header = sheet['H' + str(1)].internal_value
+        category_header = sheet['I' + str(1)].value
+        int_ext_header = sheet['J' + str(1)].value
+        state_header = sheet['K' + str(1)].value
+        country_header = sheet['L' + str(1)].value
+        user_define1_header = sheet['M' + str(1)].value
+        user_define2_header = sheet['N' + str(1)].value
+        subtotal_header = sheet['O' + str(1)].value
+        cus_count_header = sheet['P' + str(1)].value
+        if node_header!='Node':
+            context_dict['state'] = 'fail'
+            context_dict['table']='project'
+            context_dict['error_message']="the conlumn A name should be 'Node'"
+            return render(request, 'import_success.html',context_dict)
+        if pro_date_header!='Date':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn B name should be 'Date'"
+            return render(request, 'import_success.html',context_dict)
+        if project_name_header!='Project':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn C name should be 'Project'"
+            return render(request, 'import_success.html',context_dict)
+        if service_header!='Service':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn D name should be 'Service',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if instrument_header!='Instrument':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn E name should be 'Instrument',,please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if person_header!='Person':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn F name should be 'Person',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if organization_header!='Person/Organisation':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn G name should be 'Person/Organisation',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if num_sample_header!='No. samples*':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn H name should be 'No. samples*',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if category_header!='Category':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn I name should be 'Category',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if int_ext_header!='Int/Ext':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn J name should be 'Int/Ext',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if state_header!='State':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn K name should be 'State',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if country_header!='Country':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn L name should be 'Country',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if user_define1_header!='User Definined 1':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn M name should be 'User Definined 1',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if user_define2_header!='User Definined 2':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn N name should be 'User Definined 2',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if subtotal_header!='Sub-total':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn O name should be 'Sub-total',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        if cus_count_header!='Customer Number':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'project'
+            context_dict['error_message']="the conlumn P name should be '',please check spreadsheet format notice."
+            return render(request, 'import_success.html',context_dict)
+        value_list = []
+        index = 0
         for row in range(start, end+1):
             node = sheet['A' + str(row)].value
             pro_date = sheet['B' + str(row)].value
@@ -100,59 +200,103 @@ def read_project(request):
             subtotal = sheet['O' + str(row)].value
             cus_count = sheet['P' + str(row)].value
 
+            columns='''ABCDEFGHIJKLMNOP'''
+            all_none=True
+            for c in columns:
+                if sheet[c+str(row)].value!=None:
+                    all_none=False
+            if all_none:
+                index += 1
+                continue
+            if not re.match('^[A-Za-z]+$', node):
+                context_dict['state'] = 'fail'
+                context_dict['error_message'] = "invalid node at %d %s" % (index + start, 'A')
+                context_dict['node']=node
+                context_dict['table']='project'
+                return render(request, 'import_success.html', context_dict)
+            if type(pro_date)!=type(datetime.strptime('2010-01-01','%Y-%m-%d')):
+                context_dict['state'] = 'fail'
+                print type(pro_date)
+                print pro_date
+                context_dict['error_message'] = "invalid date at %d %s" % (index + start, 'B')
+                context_dict['table']='project'
+                return render(request, 'import_success.html', context_dict)
+            if not re.match('^\d{1,2}/\d{1,2}/\d{4}$', datetime.strftime(pro_date,'%d/%m/%Y')):
+                context_dict['state'] = 'fail'
+                context_dict['table']='project'
+                context_dict['error_message'] = "invalid Date at %d %s" % (index + start, 'B')
+                return render(request, 'import_success.html', context_dict)
+            index += 1
             # if pro_date=='Half year' or pro_date is 'Full year':
             # pro_date = date.today().isoformat()
-            if isinstance(pro_date, date):
-                pro_date = pro_date.isoformat()
-            else:
-                pro_date = date.today().isoformat()
-            if project_name is None:
-                project_name = 'null'
-            if person is None:
-                person = 'Null'
-            if organization is None:
-                organization = "Null"
-            if cus_count is None:
-                cus_count = "0"
-            if user_define2 is not None:
-                user_define2 = user_define2.upper()
-            else:
-                user_define2 = "NULL"
-            if not isinstance(num_sample, int):
-                num_sample = 0
+        for row in range(start, end + 1):
+            node = sheet['A' + str(row)].value
+            pro_date = sheet['B' + str(row)].value
+            project_name = sheet['C' + str(row)].value
+            service = sheet['D' + str(row)].value
+            instrument = sheet['E' + str(row)].value
+            person = sheet['F' + str(row)].value
+            organization = sheet['G' + str(row)].value
+            num_sample = sheet['H' + str(row)].internal_value
+            category = sheet['I' + str(row)].value
+            int_ext = sheet['J' + str(row)].value
+            state = sheet['K' + str(row)].value
+            country = sheet['L' + str(row)].value
+            user_define1 = sheet['M' + str(row)].value
+            user_define2 = sheet['N' + str(row)].value
+            subtotal = sheet['O' + str(row)].value
+            cus_count = sheet['P' + str(row)].value
 
-            if subtotal is None:
-                subtotal = 0.00
-            else:
-                subtotal = decimal.Decimal("%.2f" % subtotal)
+        if isinstance(pro_date, date):
+            pro_date = pro_date.isoformat()
+        else:
+            pro_date = date.today().isoformat()
+        if project_name is None:
+            project_name = 'null'
+        if person is None:
+            person = 'Null'
+        if organization is None:
+            organization = "Null"
+        if cus_count is None:
+            cus_count = "0"
+        if user_define2 is not None:
+            user_define2 = user_define2.upper()
+        else:
+            user_define2 = "NULL"
+        if not isinstance(num_sample, int):
+            num_sample = 0
 
-            field_check = user_define2.split(';')
-            if len(field_check) == 1:
-                query = """INSERT INTO migration_db_project (node, pro_date,project_name,service,instrument,person,organization,num_sample,category,int_ext,state,country,user_define1,user_define2,subtotal,cus_count) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+        if subtotal is None:
+            subtotal = 0.00
+        else:
+            subtotal = decimal.Decimal("%.2f" % subtotal)
+
+        field_check = user_define2.split(';')
+        if len(field_check) == 1:
+            query = """INSERT INTO migration_db_project (node, pro_date,project_name,service,instrument,person,organization,num_sample,category,int_ext,state,country,user_define1,user_define2,subtotal,cus_count) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+            values = (
+                node, pro_date, project_name, service, instrument, person, organization, num_sample, category,
+                int_ext, state,
+                country, user_define1, user_define2, subtotal, cus_count)
+            cursor.execute(query, values)
+            database.commit()
+        else:
+            for each in field_check:
+                query = """INSERT INTO migration_db_project (node,pro_date,project_name,service,instrument,person,organization,num_sample,category,int_ext,state,country,user_define1,user_define2,subtotal,cus_count) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
                 values = (
                     node, pro_date, project_name, service, instrument, person, organization, num_sample, category,
-                    int_ext, state,
-                    country, user_define1, user_define2, subtotal, cus_count)
+                    int_ext,
+                    state, country, user_define1, each, subtotal, cus_count)
                 cursor.execute(query, values)
                 database.commit()
-            else:
-                for each in field_check:
-                    query = """INSERT INTO migration_db_project (node,pro_date,project_name,service,instrument,person,organization,num_sample,category,int_ext,state,country,user_define1,user_define2,subtotal,cus_count) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-                    values = (
-                        node, pro_date, project_name, service, instrument, person, organization, num_sample, category,
-                        int_ext,
-                        state, country, user_define1, each, subtotal, cus_count)
-                    cursor.execute(query, values)
-                    database.commit()
 
         cursor.close()
 
         database.close()
 
         print ("Importion Done.")
-
-
-        return render(request, 'import_success.html')
+        context_dict['state'] = 'success'
+        return render(request, 'import_success.html',context_dict)
 
 def read_invoice(request):
 
@@ -233,6 +377,24 @@ def read_quote(request):
 
         database = MySQLdb.connect(host="localhost", user=settings.DB_USERNAME, passwd=settings.DB_PASSWORD, db="ma_newdb")
         cursor = database.cursor()
+        header1 = sheet['A' + str(0)].value
+        header2 = sheet['B' + str(0)].value
+        header3 = sheet['C' + str(0)].value
+        header4 = sheet['D' + str(0)].value
+        header5 = sheet['E' + str(0)].value
+        header6 = sheet['F' + str(0)].value
+        header7 = sheet['G' + str(0)].value
+        header8 = sheet['H' + str(0)].value
+        header9 = sheet['I' + str(0)].value
+        header10 = sheet['J' + str(0)].value
+        header11 = sheet['K' + str(0)].value
+        header12 = sheet['L' + str(0)].value
+        header13 = sheet['M' + str(0)].value
+        if header1!="Quote#":
+            errot_message="the header is not right"
+        value_list=[]
+
+        index=0
         for row in range(start, end+1):
             quote_num = sheet['A' + str(row)].value
             quote_year = sheet['B' + str(row)].value
@@ -247,7 +409,8 @@ def read_quote(request):
             accept = sheet['K' + str(row)].value
             invoiced_not = sheet['L' + str(row)].value
             comment = sheet['M' + str(row)].value
-
+            if not re.match('',quote_num):
+                errot_message="invalid quote number at %d %s"%(index+start,'A')
             if isinstance(quote_date, date):
                 quote_date = quote_date.isoformat()
             else:
@@ -266,7 +429,7 @@ def read_quote(request):
                 invoiced_not = "Null"
             if comment is None:
                 comment = "Null"
-
+            index+=1
             query = """INSERT INTO migration_db_quote(quote_num,quote_year,version,concatenate,client,company,quote_staff,quote_date,quote_value,grant_not,accept, invoiced_not,comment) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
             values = (
             quote_num, quote_year, version, concatenate, client, company, quote_staff, quote_date, quote_value,
@@ -276,6 +439,8 @@ def read_quote(request):
 
         cursor.close()
 
+        if errot_message!="":
+            return
         database.close()
 
         print ("Importion Done.")

@@ -91,7 +91,7 @@ def read_project(request):
         instrument_header = sheet['E' + str(1)].value
         person_header = sheet['F' + str(1)].value
         organization_header = sheet['G' + str(1)].value
-        num_sample_header = sheet['H' + str(1)].internal_value
+        num_sample_header = sheet['H' + str(1)].value
         category_header = sheet['I' + str(1)].value
         int_ext_header = sheet['J' + str(1)].value
         state_header = sheet['K' + str(1)].value
@@ -246,7 +246,6 @@ def read_project(request):
             user_define2 = sheet['N' + str(row)].value
             subtotal = sheet['O' + str(row)].value
             cus_count = sheet['P' + str(row)].value
-
         if isinstance(pro_date, date):
             pro_date = pro_date.isoformat()
         else:
@@ -299,7 +298,7 @@ def read_project(request):
         return render(request, 'import_success.html',context_dict)
 
 def read_invoice(request):
-
+    context_dict = {}
     if request.method == 'POST':
         file_name = request.FILES['excel']
         print request.FILES['excel']
@@ -312,6 +311,129 @@ def read_invoice(request):
 
         database = MySQLdb.connect(host="localhost", user=settings.DB_USERNAME, passwd=settings.DB_PASSWORD, db="ma_newdb")
         cursor = database.cursor()
+
+        date_header = sheet['A' + str(1)].value
+        inv_header = sheet['B' + str(1)].value
+
+        quote_header = sheet['D' + str(1)].value
+        paid_header = sheet['E' + str(1)].value
+        ma_staff_header = sheet['F' + str(1)].value
+        project_inv_header = sheet['G' + str(1)].value
+        service_type_header = sheet['H' + str(1)].value
+        instrument_header = sheet['I' + str(1)].value
+        person_header = sheet['J' + str(1)].value
+        address_header = sheet['K' + str(1)].value
+        no_sample_header = sheet['L' + str(1)].value
+        category_header = sheet['M' + str(1)].value
+        int_ext_header = sheet['N' + str(1)].value
+        user_define1_header = sheet['O' + str(1)].value
+        user_define2_header = sheet['P' + str(1)].value
+        sub_total_header = sheet['Q' + str(1)].value
+        index = 0
+        if date_header != 'Date':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Date'"
+        if inv_header != 'Inv#':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Inv#'"
+        if quote_header != 'Quote#':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Quote#'"
+        if paid_header != 'Paid':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Paid'"
+        if ma_staff_header != 'MA Staff':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'MA Staff'"
+        if project_inv_header != 'Project':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Project'"
+        if service_type_header != 'Type of Service':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Type of Service'"
+        if instrument_header != 'Instrument':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Instrument'"
+        if person_header != 'Person':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Person'"
+        if address_header != 'Address':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Address'"
+        if no_sample_header != 'No.Sample':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'No.Sample'"
+        if category_header != 'Category':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Category'"
+        if int_ext_header != 'Int/Ext':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Int/Ext'"
+        if user_define1_header != 'User Defined 1':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'User Defined 1'"
+        if user_define2_header != 'User Defined 2':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'User Defined 2'"
+        if sub_total_header != 'Sub-Total':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'invoice'
+            context_dict['error_message'] = "the conlumn A name should be 'Sub-Total'"
+
+        for row in range(start, end + 1):
+            invoice_date = sheet['A' + str(row)].value
+            invoice_num = sheet['B' + str(row)].value
+            bad_debt = sheet['C' + str(row)].value
+            quote = sheet['D' + str(row)].value
+            paid = sheet['E' + str(row)].value
+            ma_staff = sheet['F' + str(row)].value
+            project_invoice = sheet['G' + str(row)].value
+            service_type = sheet['H' + str(row)].value
+            instrument = sheet['I' + str(row)].value
+            person_invoice = sheet['J' + str(row)].value
+            address = sheet['K' + str(row)].value
+            no_sample_in = sheet['L' + str(row)].value
+            category_in = sheet['M' + str(row)].value
+            int_ext_in = sheet['N' + str(row)].value
+            user_define1_in = sheet['O' + str(row)].value
+            user_define2_in = sheet['P' + str(row)].value
+            sub_total_in = sheet['Q' + str(row)].value
+            reconciliation = sheet['R' + str(row)].value
+            running_total = sheet['S' + str(row)].value
+            columns = '''ABCDEFGHIJKLMNOPQRS'''
+            all_none = True
+            for c in columns:
+                if sheet[c + str(row)].value != None:
+                    all_none = False
+            if all_none:
+                index += 1
+                continue
+
+            if type(invoice_date) != type(datetime.strptime('2010-01-01', '%Y-%m-%d')):
+                context_dict['state'] = 'fail'
+                print type(invoice_date)
+                print invoice_date
+                context_dict['error_message'] = "invalid date at %d %s" % (index + start, 'B')
+                context_dict['table'] = 'project'
+                return render(request, 'import_success.html', context_dict)
+
+
+
 
         for row in range(start, end+1):
             invoice_date = sheet['A' + str(row)].value
@@ -364,7 +486,7 @@ def read_invoice(request):
         return render(request, 'import_success.html')
 
 def read_quote(request):
-
+    context_dict={}
     if request.method == 'POST':
         file_name = request.FILES['excel']
         print request.FILES['excel']
@@ -377,24 +499,82 @@ def read_quote(request):
 
         database = MySQLdb.connect(host="localhost", user=settings.DB_USERNAME, passwd=settings.DB_PASSWORD, db="ma_newdb")
         cursor = database.cursor()
-        header1 = sheet['A' + str(0)].value
-        header2 = sheet['B' + str(0)].value
-        header3 = sheet['C' + str(0)].value
-        header4 = sheet['D' + str(0)].value
-        header5 = sheet['E' + str(0)].value
-        header6 = sheet['F' + str(0)].value
-        header7 = sheet['G' + str(0)].value
-        header8 = sheet['H' + str(0)].value
-        header9 = sheet['I' + str(0)].value
-        header10 = sheet['J' + str(0)].value
-        header11 = sheet['K' + str(0)].value
-        header12 = sheet['L' + str(0)].value
-        header13 = sheet['M' + str(0)].value
-        if header1!="Quote#":
-            errot_message="the header is not right"
+
         value_list=[]
 
         index=0
+        quote_header = sheet['A' + str(1)].value
+        year_header = sheet['B' + str(1)].value
+
+        version_header = sheet['C' + str(1)].value
+        concatenate_header = sheet['D' + str(1)].value
+        client_header = sheet['E' + str(1)].value
+        company_header = sheet['F' + str(1)].value
+        mastaff_header = sheet['G' + str(1)].value
+        date_header = sheet['H' + str(1)].value
+        value_header = sheet['I' + str(1)].value
+        grant_header = sheet['J' + str(1)].value
+        accept_header = sheet['K' + str(1)].value
+        invoice_header = sheet['L' + str(1)].value
+        comment_header = sheet['M' + str(1)].value
+
+        index = 0
+        if quote_header != 'Quote #':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Quote #'"
+        if year_header != 'Year':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Year'"
+        if version_header != 'Version':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Version'"
+        if concatenate_header != 'CONCATENATE':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'CONCATENATE'"
+        if client_header != 'Client':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Client'"
+        if company_header != 'Company':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Company'"
+        if mastaff_header != 'MA Staff Member':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'MA Staff Member'"
+        if date_header != 'Date':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Date'"
+        if value_header != 'Value (incl. GST)':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Value (incl. GST)'"
+        if grant_header != 'For grant':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'For grant'"
+        if accept_header != 'Accepted':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Accpeted'"
+        if invoice_header != 'Invoiced':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Invoiced'"
+        if comment_header != 'Comment':
+            context_dict['state'] = 'fail'
+            context_dict['table'] = 'quote'
+            context_dict['error_message'] = "the conlumn A name should be 'Comment'"
+
+
+
+
         for row in range(start, end+1):
             quote_num = sheet['A' + str(row)].value
             quote_year = sheet['B' + str(row)].value
@@ -617,9 +797,9 @@ def filter_result(request,node_name_slug):
                         data.append(0)
                         data.append(0)
                         data.append(0)
-                        data.append(0)
+                        # data.append(0)
 
-                data = [data[x:x + 5] for x in range(0, len(data), 5)]
+                data = [data[x:x + 4] for x in range(0, len(data), 4)]
             else:
                 data = [[0, 0, 0, 0, 0]]
             context_dict['State'] = data
@@ -631,7 +811,7 @@ def filter_result(request,node_name_slug):
 
                 for t in user2_choice:
                     data.append(t)
-                    if projects.filter(user_define1=t).exists():
+                    if projects.filter(user_define2=t).exists():
                         data.append(list(projects.filter(user_define2=t).aggregate(Sum('subtotal')).values())[0])
                         data.append(list(projects.filter(user_define2=t).aggregate(Sum('cus_count')).values())[0])
                         #data.append(projects.filter(user_define2=t).count())
@@ -640,9 +820,9 @@ def filter_result(request,node_name_slug):
                         data.append(0)
                         data.append(0)
                         data.append(0)
-                        data.append(0)
+                        # data.append(0)
 
-                data = [data[x:x + 5] for x in range(0, len(data), 5)]
+                data = [data[x:x + 4] for x in range(0, len(data), 4)]
             else:
                 data = [[0, 0, 0, 0, 0]]
             context_dict['User_Define2'] = data
@@ -657,15 +837,15 @@ def filter_result(request,node_name_slug):
                     if projects.filter(user_define1=t).exists():
                         data.append(list(projects.filter(user_define1=t).aggregate(Sum('subtotal')).values())[0])
                         data.append(list(projects.filter(user_define1=t).aggregate(Sum('cus_count')).values())[0])
-                        data.append(projects.filter(user_define1=t).count())
+                        # data.append(projects.filter(user_define1=t).count())
                         data.append(list(projects.filter(user_define1=t).aggregate(Sum('num_sample')).values())[0])
                     else:
                         data.append(0)
                         data.append(0)
-                        data.append(0)
+                        # data.append(0)
                         data.append(0)
 
-                data = [data[x:x + 5] for x in range(0, len(data), 5)]
+                data = [data[x:x + 4] for x in range(0, len(data), 4)]
             else:
                 data = [[0, 0, 0, 0, 0]]
             context_dict['User_Define1'] = data
@@ -680,15 +860,14 @@ def filter_result(request,node_name_slug):
                     if projects.filter(category=t).exists():
                         data.append(list(projects.filter(category=t).aggregate(Sum('subtotal')).values())[0])
                         data.append(list(projects.filter(category=t).aggregate(Sum('cus_count')).values())[0])
-                        data.append(projects.filter(category=t).count())
+                        # data.append(projects.filter(category=t).count())
                         data.append(list(projects.filter(category=t).aggregate(Sum('num_sample')).values())[0])
                     else:
                         data.append(0)
                         data.append(0)
+                        # data.append(0)
                         data.append(0)
-                        data.append(0)
-
-                data = [data[x:x + 5] for x in range(0, len(data), 5)]
+                data = [data[x:x + 4] for x in range(0, len(data), 4)]
             else:
                 data = [[0, 0, 0, 0, 0]]
             context_dict['Category']=data

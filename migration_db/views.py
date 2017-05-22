@@ -190,7 +190,7 @@ def read_project(request):
             instrument = sheet['E' + str(row)].value
             person = sheet['F' + str(row)].value
             organization = sheet['G' + str(row)].value
-            num_sample = sheet['H' + str(row)].internal_value
+            num_sample = int(sheet['H' + str(row)].value)
             category = sheet['I' + str(row)].value
             int_ext = sheet['J' + str(row)].value
             state = sheet['K' + str(row)].value
@@ -237,7 +237,7 @@ def read_project(request):
             instrument = sheet['E' + str(row)].value
             person = sheet['F' + str(row)].value
             organization = sheet['G' + str(row)].value
-            num_sample = sheet['H' + str(row)].internal_value
+            num_sample = int(sheet['H' + str(row)].internal_value)
             category = sheet['I' + str(row)].value
             int_ext = sheet['J' + str(row)].value
             state = sheet['K' + str(row)].value

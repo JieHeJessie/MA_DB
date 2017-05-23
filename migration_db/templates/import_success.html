@@ -18,14 +18,14 @@
                 <i class="fa fa-times"></i>
                 <h2 class="text-uppercase margin-bottom-10" style=" text-align:center;">Fail upload, because {{error_message}}</h2>
                 <br><br><br>
-                <p style="text-align: center"><a href="index.html" class="margin-bottom-10" style="color:#FFFFFF"> Return import page</a></p>
+                <p style="text-align: center"><a href="{% url 'import_page' %}" class="margin-bottom-10" style="color:#FFFFFF"> Return import page</a></p>
 	 </div>
      {% if table == 'project' %}
      <!--table-->
                 <div class="col-1">
                     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
                         <i class="fa fa-times"></i>
-                        <div class="panel-heading templatemo-position-relative"><h2>Correct spreadsheet format (Please make sure the order and format of attributes, example as below)</h2>
+                        <div class="panel-heading templatemo-position-relative"><h2>Correct spreadsheet format</h2>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
@@ -126,7 +126,7 @@
                 <div class="col-1">
                     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
                         <i class="fa fa-times"></i>
-                        <div class="panel-heading templatemo-position-relative"><h2>Correct spreadsheet format (Please make sure the order and format of attributes, example as below)</h2>
+                        <div class="panel-heading templatemo-position-relative"><h2>Correct spreadsheet format</h2>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
@@ -211,7 +211,7 @@
                 <div class="col-1">
                     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
                         <i class="fa fa-times"></i>
-                        <div class="panel-heading templatemo-position-relative"><h2>Correct spreadsheet format (Please make sure the order and format of attributes, example as below)</h2>
+                        <div class="panel-heading templatemo-position-relative"><h2>Correct spreadsheet format</h2>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
